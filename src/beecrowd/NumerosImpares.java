@@ -1,7 +1,9 @@
+package beecrowd;
+
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) throws Exception {
+public class NumerosImpares {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         int final_number = sc.nextInt();

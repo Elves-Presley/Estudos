@@ -31,5 +31,7 @@ public class QueTipoDeNumero{
             System.out.println(qtdImpar + " valor(es) impar(es)");
             System.out.println(qtdPositivos + " valor(es) positivo(s)");
             System.out.println(qtdNegativos + " valor(es) negativo(s)");
+
+            sc.close();
     }
 }
