@@ -69,9 +69,7 @@ public class Matriz {
                 break;
         }
         
-
-        
-        System.out.println();
+        scanner.close();
      }
      
      
