@@ -1,3 +1,4 @@
+package atividades;
 import java.util.Random;
 import java.util.Scanner;
 public class Matriz {
@@ -58,14 +59,12 @@ public class Matriz {
                 determinante3x3 = determinante3x3(matrizQuadrada, ordemMatriz);
                 System.out.printf("DETERMINANTE MATRIZ 3X3 -> %d\n", determinante3x3);
                 break;
-
             case 4:
-                
-
+                break;
             case 5:
                 break;
-        
             default:
+                System.out.println("\nNão conseguimos calcular um determinante para a sua Matriz. Isso será implementado no futuro.");
                 break;
         }
         
