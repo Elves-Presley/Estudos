@@ -1,3 +1,4 @@
+import java.util.Random;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.control.ToggleGroup;
@@ -7,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -24,6 +26,13 @@ public class Main extends Application {
 
         Label instrucaoLabel = new Label("Por favor, selecione a ordem da Matriz que será criada.");
 
+        //Aqui é onde o conreúdoda minha matriz irá aparecer
+        TextArea matrizTextArea = new TextArea();
+        matrizTextArea.setEditable(false);
+        matrizTextArea.setMaxWidth(300);
+        matrizTextArea.setMaxHeight(200);
+        matrizTextArea.setStyle("-fx-font-family: 'Courier New'; -fx-font-size: 20px; -fx-font-weight: bold; -fx-focus-color: transparent;");
+       
         //Vou criar um grupo com togleGroup. Ele não é um objeto visual mas garante que apenas uma opção no grupo será marcada.
         //No caso, estou me referindo aos meus botões de opcções, RadioButtons;
         ToggleGroup ordemMatriz = new ToggleGroup();
@@ -50,7 +59,29 @@ public class Main extends Application {
             RadioButton selecionado = (RadioButton) ordemMatriz.getSelectedToggle();
 
             if (selecionado != null) {
-                System.out.println("Deu certo! O caba escolheu a opção " + selecionado.getText());
+                String textoDoBotao= selecionado.getText();
+                int ordem = 0;
+
+                if(textoDoBotao.contains("2")) {ordem = 2;}
+                if(textoDoBotao.contains("3")) {ordem = 3;}
+                if(textoDoBotao.contains("4")) {ordem = 4;}
+                if(textoDoBotao.contains("5")) {ordem = 5;}
+
+                int[][] matrizQuadrada = new int[ordem][ordem];
+                Random random = new Random();
+                StringBuilder montandorMatriz = new StringBuilder();
+        
+                for (int i = 0; i < matrizQuadrada.length; i++) {
+                    montandorMatriz.append("[");
+                    for (int j = 0; j < matrizQuadrada[0].length; j++) {
+                        matrizQuadrada[i][j] = random.nextInt(21) - 10;
+                        montandorMatriz.append(String.format("%4d", matrizQuadrada[i][j])); //Minha String já está sendo criada sem problemas no StringBuilder
+                    }
+                    montandorMatriz.append("]\n"); //Ao finalizar uma linha eu pulo a sequência para ir para a próxima.
+                }
+
+                //A partir desse ponto a minha matriz está preenchida e já possuo a minha Label que vai receber a "cópia" da minha matriz em memória.
+                matrizTextArea.setText("\n" + montandorMatriz.toString());
             }
 
         });
@@ -70,11 +101,12 @@ public class Main extends Application {
             option2,
             option3,
             option4,
-            confirmarOpcao
+            confirmarOpcao,
+            matrizTextArea
         );
 
         //Criei uma cena como o meu layout. Nessa cena os meus Nodes criados aparecerão de acordo o Layout utilizado.
-        Scene cena = new Scene(layout, 450, 450);
+        Scene cena = new Scene(layout, 600, 600);
 
         //Aqui é a configuração final do meu sistema, defini a cena ao palco, o titulo e pedi para mostar.
         primaryStage.setScene(cena);
