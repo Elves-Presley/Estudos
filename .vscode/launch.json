@@ -3,12 +3,17 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Matriz",
+            "request": "launch",
+            "mainClass": "atividades.Matriz",
+            "projectName": "Estudos_76792c14"
+        },
+        {
+            "type": "java",
             "name": "Launch App",
             "request": "launch",
             "mainClass": "Main",
-            "projectName": "Estudos_925b73f4",
-            "vmArgs": "--module-path \"C:/JavaFX/javafx-sdk-25.0.4/lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"C:/javafx-sdk-25.0.4/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
-
