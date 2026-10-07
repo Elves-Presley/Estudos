@@ -60,6 +60,7 @@ public class Matriz {
                 System.out.printf("DETERMINANTE MATRIZ 3X3 -> %d\n", determinante3x3);
                 break;
             case 4:
+                Matriz.criarSubMatriz(matrizQuadrada, 3, 3);
                 break;
             case 5:
                 break;
@@ -167,5 +168,62 @@ public class Matriz {
          return determinante;
      }
      
-     
+     public static int determinante4x4(int[][] matriz, int n){
+
+        int[] numerosZeroLinha = new int[n];
+        int[] numerosZeroColuna = new int[n];
+
+        int indiceMaiorLinha = 0, indiceMaiorColuna = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                
+                if (matriz[i][j] == 0) {
+                    numerosZeroLinha[i]++;
+                    numerosZeroColuna[j]++;
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            if(numerosZeroLinha[i] > numerosZeroColuna[indiceMaiorLinha]){
+                indiceMaiorLinha = i;
+            }
+
+            if(numerosZeroColuna[i] > numerosZeroColuna[indiceMaiorColuna]){
+                indiceMaiorColuna = i;
+            }
+        }
+
+        if(numerosZeroLinha[indiceMaiorLinha] > numerosZeroColuna[indiceMaiorColuna]){
+
+
+        }else{
+
+        }
+        
+        return 0;
+     }
+
+     public static int criarSubMatriz(int[][] matriz, int a, int b){
+        int n = matriz.length;
+        int[][] subMatriz = new int[n - 1][n - 1];
+        int apoio1 = 0, apoio2 = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if(i != a && j != b){
+                    subMatriz[apoio1][apoio2++] = matriz[i][j];
+
+                    if (apoio2 == (n - 1)) {
+                        apoio2 = 0;
+                        apoio1++;
+                    }
+                }
+            }
+        }
+
+        Matriz.exibirMatriz(subMatriz, n-1);
+        return 0;
+     }
 }
