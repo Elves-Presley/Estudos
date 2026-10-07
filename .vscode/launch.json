@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Matriz",
+            "request": "launch",
+            "mainClass": "atividades.Matriz",
+            "projectName": "Estudos_76792c14"
+        },
+        {
+            "type": "java",
+            "name": "Launch App",
+            "request": "launch",
+            "mainClass": "Main",
+            "vmArgs": "--module-path \"C:/javafx-sdk-25.0.4/lib\" --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}

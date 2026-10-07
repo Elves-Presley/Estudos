@@ -2,6 +2,28 @@
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\javafx.base.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\javafx.controls.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\javafx.fxml.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\javafx.graphics.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\javafx.media.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\javafx.swing.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\javafx.web.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\javafx-swt.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\jdk.jsobject.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\jfx.incubator.input.jar",
+        "c:\\JavaFX\\javafx-sdk-25.0.4\\lib\\jfx.incubator.richtext.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\javafx.base.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\javafx.controls.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\javafx.fxml.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\javafx.graphics.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\javafx.media.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\javafx.swing.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\javafx.web.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\javafx-swt.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\jdk.jsobject.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\jfx.incubator.input.jar",
+        "c:\\javafx-sdk-25.0.4\\lib\\jfx.incubator.richtext.jar"
     ]
 }
