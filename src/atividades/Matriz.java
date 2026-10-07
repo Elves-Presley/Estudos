@@ -16,6 +16,8 @@ public class Matriz {
         int determinante2x2;
         int determinante3x3;
         int determinante4x4;
+        int determinante5x5;
+
         
         System.out.println("PROGRAMA PARA CÁLCULO DE MATRIZES\n\n");
         System.out.println("->Por favor, digite um valor entre 2 e 5. Esse valor será corresponderá ao número de linhas e colunas da nossa matriz.\n");
@@ -61,10 +63,12 @@ public class Matriz {
                 System.out.printf("DETERMINANTE MATRIZ 3X3 -> %d\n", determinante3x3);
                 break;
             case 4:
-                determinante4x4 = determinante4x4(matrizQuadrada, ordemMatriz);
+                determinante4x4 = determinanteGeral(matrizQuadrada, ordemMatriz);
                 System.out.printf("DETERMINANTE MATRIZ 4X4 -> %d\n", determinante4x4);
                 break;
             case 5:
+                determinante5x5 = determinanteGeral(matrizQuadrada, ordemMatriz);
+                System.out.printf("DETERMINANTE MATRIZ 5X5 -> %d\n", determinante5x5);
                 break;
             default:
                 System.out.println("\nNão conseguimos calcular um determinante para a sua Matriz. Isso será implementado no futuro.");
@@ -170,7 +174,7 @@ public class Matriz {
          return determinante;
      }
      
-     public static int determinante4x4(int[][] matriz, int n){
+     public static int determinanteGeral(int[][] matriz, int n){
 
         int determinante;
         int[] numerosZeroLinha = new int[n];
@@ -245,15 +249,18 @@ public class Matriz {
                 }
                 apoio1++;
             }
-
-            Matriz.exibirMatriz(subMatriz, n-1);
             return subMatriz;
         }
 
      public static int cofator(int i, int j, int[][] subMatriz){
         int cofator;
 
-        cofator = (int) Math.pow(-1, i + j) * Matriz.determinante3x3(subMatriz, subMatriz.length);
+        if(subMatriz.length == 3){
+            cofator = (int) Math.pow(-1, i + j) * Matriz.determinante3x3(subMatriz, subMatriz.length);
+        }else{
+            cofator = (int) Math.pow(-1, i + j) * Matriz.determinanteGeral(subMatriz, subMatriz.length);
+        }
+
         return cofator;
      }
      
