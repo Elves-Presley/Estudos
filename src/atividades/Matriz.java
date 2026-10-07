@@ -15,6 +15,7 @@ public class Matriz {
         int produtoDiagonalSecundaria;
         int determinante2x2;
         int determinante3x3;
+        int determinante4x4;
         
         System.out.println("PROGRAMA PARA CÁLCULO DE MATRIZES\n\n");
         System.out.println("->Por favor, digite um valor entre 2 e 5. Esse valor será corresponderá ao número de linhas e colunas da nossa matriz.\n");
@@ -31,7 +32,7 @@ public class Matriz {
         
         for (int i = 0; i < ordemMatriz; i++) {
             for (int j = 0; j < ordemMatriz; j++) {
-                matrizQuadrada[i][j] = Matriz.chanceZeroMaior();
+                matrizQuadrada[i][j] = Matriz.randomProbabilidadeZero();
             }
         }
 
@@ -60,7 +61,8 @@ public class Matriz {
                 System.out.printf("DETERMINANTE MATRIZ 3X3 -> %d\n", determinante3x3);
                 break;
             case 4:
-                Matriz.criarSubMatriz(matrizQuadrada, 3, 3);
+                determinante4x4 = determinante4x4(matrizQuadrada, ordemMatriz);
+                System.out.printf("DETERMINANTE MATRIZ 4X4 -> %d\n", determinante4x4);
                 break;
             case 5:
                 break;
@@ -168,9 +170,9 @@ public class Matriz {
          return determinante;
      }
      
-<<<<<<< HEAD
      public static int determinante4x4(int[][] matriz, int n){
 
+        int determinante;
         int[] numerosZeroLinha = new int[n];
         int[] numerosZeroColuna = new int[n];
 
@@ -187,7 +189,7 @@ public class Matriz {
         }
 
         for (int i = 0; i < n; i++) {
-            if(numerosZeroLinha[i] > numerosZeroColuna[indiceMaiorLinha]){
+            if(numerosZeroLinha[i] > numerosZeroLinha[indiceMaiorLinha]){
                 indiceMaiorLinha = i;
             }
 
@@ -197,103 +199,71 @@ public class Matriz {
         }
 
         if(numerosZeroLinha[indiceMaiorLinha] > numerosZeroColuna[indiceMaiorColuna]){
+            int resultado = 0;
 
+            for (int j = 0; j < n; j++) {
+                if (matriz[indiceMaiorLinha][j] != 0) {
+                    resultado += matriz[indiceMaiorLinha][j] * Matriz.cofator(indiceMaiorLinha, j, Matriz.criarSubMatriz(matriz, indiceMaiorLinha, j));
+                }
+            }
+
+            determinante = resultado;
 
         }else{
+            int resultado = 0; //Escopo diferente.
+
+            for (int i = 0; i < n; i++) {
+
+                if (matriz[i][indiceMaiorColuna] != 0) {
+                    resultado += matriz[i][indiceMaiorColuna] * Matriz.cofator(i, indiceMaiorColuna, Matriz.criarSubMatriz(matriz, i, indiceMaiorColuna));
+                }
+            }
+
+            determinante = resultado;
 
         }
+
         
-        return 0;
+        
+        return determinante;
      }
 
-     public static int criarSubMatriz(int[][] matriz, int a, int b){
+     public static int[][] criarSubMatriz(int[][] matriz, int a, int b){
         int n = matriz.length;
         int[][] subMatriz = new int[n - 1][n - 1];
-        int apoio1 = 0, apoio2 = 0;
 
+        int apoio1 = 0;
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if(i != a && j != b){
-                    subMatriz[apoio1][apoio2++] = matriz[i][j];
-
-                    if (apoio2 == (n - 1)) {
-                        apoio2 = 0;
-                        apoio1++;
-                    }
-                }
-            }
-        }
-
-        Matriz.exibirMatriz(subMatriz, n-1);
-=======
-     public static int chanceZeroMaior(){
-
-        int zeroTalvez = (int) (Math.random() * 4);
-        if(zeroTalvez == 0) return 0;
-
-        int esseNaoEZero = (int)(Math.random() * 21) - 10;
-        return esseNaoEZero; 
-
-     }
-
-     public static int determinante4x4(int[][] matriz, int n){
-        
-        int[] zeroLinhas = new int[n]; //Iniciou com zeros por padrão?
-        int[] zeroColunas = new int[n];
-        int posLinhaMaior = 0, posColunaMaior = 0;
-
-        //primeiro saber qual a linha ou coluna com mais zeros
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (matriz[i][j] == 0) {
-                    zeroLinhas[i]++;
-                    zeroColunas[j]++;
-                }
-            }
-
-            for (int k = 0; k < (n - 1); k++) { //até o antepen´ltimo para comparar 2 a 2
-                posLinhaMaior = (zeroLinhas[k] > zeroLinhas[k + 1]) ? k : posLinhaMaior;
-                posColunaMaior = (zeroColunas[k] > zeroColunas[k + 1]) ? k : posLinhaMaior;
-            }
-
-            //Agora eu sei a posição da maior linha e maior coluna, enão basta verificar que dos dois é maior de fato e segui o processamento em vista disso
-
-            if(zeroLinhas[posLinhaMaior] > zeroColunas[posColunaMaior]){
-                int[] matrizElementoAij = new int[n];
-                int[] colunaElementoAij = new int[n];
-                int aux1 = 0;
-                int aux2 = 0;
-                int aux3 = 0;
-
-                for (int r = 0; r < n; r++) {
-                    if(matriz[posLinhaMaior][r] != 0){ 
-                        matrizElementoAij[aux1++] = matriz[posLinhaMaior][r];
-                        colunaElementoAij[aux2++] = r;
-                    }
-                }
-
-                //Preciso da matriz de ordem 3 agora para calcular o cofator
-                int[][][] matrizParaCofator = new int[n][n-1][n-1]; //Matriz de 3 dimensões em que a primeira indica o "Indice" da matriz
-                
-                aux1 = 0;
-                aux2 = 0; //Resentando o auxiliar
-                aux3 = 0;
-
-                //Vamos descobrir que são as nossas matrizes para calcular o cofator
-                for (int s = 0; s < n; s++) { //aqui são as linhas
-                    for (int t= 0; t < n; t++) { //Aqui colunas
-                        if (colunaElementoAij[aux1] == t) {continue;}
-                        // int[aux3][s][]
-                            
-                        
-                    }
-                }
-            }else{
-
-            }
+            if (i == a) { continue; }
             
+            int apoio2 = 0;
+            for (int j = 0; j < n; j++) {
+                if (j == b) { continue; }
+
+                subMatriz[apoio1][apoio2] = matriz[i][j];
+                apoio2++;
+                }
+                apoio1++;
+            }
+
+            Matriz.exibirMatriz(subMatriz, n-1);
+            return subMatriz;
         }
->>>>>>> 7086cebdf4982f2d9781d67773e58d79ad0656d4
-        return 0;
+
+     public static int cofator(int i, int j, int[][] subMatriz){
+        int cofator;
+
+        cofator = (int) Math.pow(-1, i + j) * Matriz.determinante3x3(subMatriz, subMatriz.length);
+        return cofator;
      }
+     
+     public static int randomProbabilidadeZero(){
+
+        int chance = (int)(Math.random() * 4); 
+
+        if (chance == 0) return 0;
+
+        int n = (int)(Math.random() * 21) - 10;
+        return n;
+    }
 }
