@@ -1,12 +1,11 @@
 package atividades;
-import java.util.Random;
 import java.util.Scanner;
 public class Matriz {
 
      public static void main(String[] args){
 
         //Objetos que serão utilizados.
-        Random random = new Random();
+        
         Scanner scanner = new Scanner(System.in);
 
         //Variáveis principais
