@@ -18,7 +18,7 @@ public class Calculadora{
         int lenghtHistory = 5;
         int lenghtHistoryAtual = 0;
         String[] history = new String[lenghtHistory];
-        String filter = " ";
+        String filter = "";
 
         //visual Presentation
         System.out.println("\n\nCALCULADORA\n");
@@ -60,11 +60,11 @@ public class Calculadora{
                 continue;
 
             }else if(operacao == Operacao.FILTRAR_HISTORICO){
-                System.out.println("Por favor, digite o filtro que deseja aplicar.");
-                System.out.println("Opções - (+, *, -, /)");
-                filter = validateFilter(filter);
-
-                if(filter == " "){ continue;}
+                System.out.println("Por favor, digite o filtro que deseja aplicar [+, *, -, /].");
+                System.out.printf("--> ");
+                filter = validateFilter(filter, sc);
+                
+                showHistory(history, lenghtHistoryAtual, filter);
             }
 
             result = startCalculator(operacao, operating1, operating2, sc);
@@ -79,7 +79,7 @@ public class Calculadora{
             showResult(operacao, result, operating1, operating2);
 
             System.out.println();//Apenas para pular uma linha
-            sc.close();
+            // sc.close();
 
         }
 
@@ -225,10 +225,10 @@ public class Calculadora{
 
         }else{
             switch(operacao){
-                case SUM            -> history[lenghtHistoryAtual - 1] = String.format(ANSI_VERMELHO + "%.2f + %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
-                case SUBTRACTION    -> history[lenghtHistoryAtual - 1] = String.format(ANSI_VERMELHO + "%.2f - %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
-                case MULTIPLICATION -> history[lenghtHistoryAtual - 1] = String.format(ANSI_VERMELHO + "%.2f * %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
-                case DIVISION       -> history[lenghtHistoryAtual - 1] = String.format(ANSI_VERMELHO + "%.2f / %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case SUM            -> history[lenghtHistoryAtual] = String.format(ANSI_VERMELHO + "%.2f + %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case SUBTRACTION    -> history[lenghtHistoryAtual] = String.format(ANSI_VERMELHO + "%.2f - %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case MULTIPLICATION -> history[lenghtHistoryAtual] = String.format(ANSI_VERMELHO + "%.2f * %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case DIVISION       -> history[lenghtHistoryAtual] = String.format(ANSI_VERMELHO + "%.2f / %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
                 default             -> isNothing = false;//Apenas para resolver o problema
             };
         }
@@ -262,7 +262,7 @@ public class Calculadora{
         }else{
 
             for (String string : history) {
-                if(string.contains(filter)){
+                if(string != null && string.contains(filter)){
                     System.out.println(ANSI_VERMELHO + aux + " -> " + string + ANSI_RESET);
                 }
                 aux++;
@@ -271,15 +271,19 @@ public class Calculadora{
         }
     }
 
-    public static String validateFilter(String operation){
+    public static String validateFilter(String operation, Scanner scanner){
+        
         String[] validOption = {"+", "-", "*", "/"};
+        scanner.nextLine();
+        while(true){
+            operation = scanner.nextLine();
 
-        for (String string : validOption) {
-            if (operation.contains(string)) {
-                return string;
+            for (String string : validOption) {
+                if (operation.equals(string)) {
+                    return string;
+                }
             }
+            System.out.println("Por favor, digite um fitro válido. (+, -, *, /)");
         }
-
-        return " ";
     }
 }
