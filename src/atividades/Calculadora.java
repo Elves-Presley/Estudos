@@ -48,8 +48,10 @@ public class Calculadora{
             operacao = chosenOperation(menuOption);
 
             if(operacao == Operacao.ATUALIZAR){
-                System.out.println("\nDigite respectivamente a atualização do operando 1 e 2: ");
+                System.out.printf("\nAtualize o primeiro operando: ");
                 operating1 = setOperands(operating1, sc);
+
+                System.out.printf("\nAtualize o segundo operando: ");
                 operating2 = setOperands(operating2, sc);
                 System.out.println("Operandos atualizados!\n");
                 continue;
@@ -199,7 +201,7 @@ public class Calculadora{
             case MULTIPLICATION -> System.out.printf(ANSI_GREEN + "%.2f * %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
             case DIVISION       -> System.out.printf(ANSI_GREEN + "%.2f / %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
             case ATUALIZAR      -> System.out.println("");
-            case SAIR           -> System.out.printf("OBRIGADO POR TESTAR O MEU PROGRAMA!");
+            case SAIR           -> System.out.printf(ANSI_GREEN + "OBRIGADO POR TESTAR O MEU PROGRAMA!" + ANSI_RESET);
             case INVALIDA       -> System.out.printf("Erro...");
             default -> System.out.println();
         };
