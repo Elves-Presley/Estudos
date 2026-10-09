@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Calculadora",
+            "request": "launch",
+            "mainClass": "atividades.Calculadora",
+            "projectName": "Estudos_925b73f4"
+        },
+        {
+            "type": "java",
             "name": "Matriz",
             "request": "launch",
             "mainClass": "atividades.Matriz",
