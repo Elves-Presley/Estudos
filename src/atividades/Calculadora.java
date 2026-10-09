@@ -5,6 +5,7 @@ public class Calculadora{
 
         public static final String ANSI_RESET = "\u001B[0m";
         public static final String ANSI_GREEN = "\u001B[32m";//Código de cores Anssi para estilização
+        public static final String ANSI_VERMELHO = "\u001B[31m";
 
     public static void main(String[] args) {
         //Objects and variavables
@@ -12,6 +13,12 @@ public class Calculadora{
         double operating1, operating2, result;
         int menuOption;
         Operacao operacao = Operacao.SUM;//Apenas um padrão inicial
+
+        //Lógica do histórico
+        int lenghtHistory = 5;
+        int lenghtHistoryAtual = 0;
+        String[] history = new String[lenghtHistory];
+        String filter = " ";
 
         //visual Presentation
         System.out.println("\n\nCALCULADORA\n");
@@ -31,8 +38,10 @@ public class Calculadora{
             System.out.println("[2] - Subtração.");
             System.out.println("[3] - Multiplicação.");
             System.out.println("[4] - Divisão.");
-            System.out.println("[5} - Atualizar Operandos.");
-            System.out.println("[6] - Sair\n");
+            System.out.println("[5] - Atualizar Operandos.");
+            System.out.println("[6] - Ver Histórico.");
+            System.out.println("[7] - Filtrar Histórico.");
+            System.out.println("[8] - Sair\n");
             System.out.printf("Que operação deseja realizar? ");
 
             menuOption = validateInputMenu(sc);
@@ -44,16 +53,35 @@ public class Calculadora{
                 operating2 = setOperands(operating2, sc);
                 System.out.println("Operandos atualizados!\n");
                 continue;
+
+            }else if(operacao == Operacao.VER_HISTORICO){
+
+                showHistory(history, lenghtHistoryAtual);
+                continue;
+
+            }else if(operacao == Operacao.FILTRAR_HISTORICO){
+                System.out.println("Por favor, digite o filtro que deseja aplicar.");
+                System.out.println("Opções - (+, *, -, /)");
+                filter = validateFilter(filter);
+
+                if(filter == " "){ continue;}
             }
-            
+
             result = startCalculator(operacao, operating1, operating2, sc);
+
+            boolean isNewHistoric = saveHistory(operacao, operating1, operating2, result, history, lenghtHistoryAtual, lenghtHistory);
+
+            if(isNewHistoric){
+                lenghtHistoryAtual++;
+                lenghtHistoryAtual = lenghtHistoryAtual > lenghtHistory ? lenghtHistoryAtual = lenghtHistory : lenghtHistoryAtual;
+            }
 
             showResult(operacao, result, operating1, operating2);
 
             System.out.println();//Apenas para pular uma linha
+            sc.close();
 
         }
-
 
     }
 
@@ -70,7 +98,7 @@ public class Calculadora{
     public static int validateInputMenu(Scanner scanner){
         int digitedOption = 0;
         boolean condition = true;
-        int menuOptionInterval1 = 1, menuOptionInterval2 = 6;
+        int menuOptionInterval1 = 1, menuOptionInterval2 = 8;
 
         while (condition){
 
@@ -127,6 +155,8 @@ public class Calculadora{
         MULTIPLICATION,
         DIVISION,
         ATUALIZAR,
+        VER_HISTORICO,
+        FILTRAR_HISTORICO,
         SAIR,
         INVALIDA
     }
@@ -140,7 +170,9 @@ public class Calculadora{
             case 3  -> Operacao.MULTIPLICATION;
             case 4  -> Operacao.DIVISION;
             case 5  -> Operacao.ATUALIZAR;
-            case 6  -> Operacao.SAIR;
+            case 6  -> Operacao.VER_HISTORICO;
+            case 7  -> Operacao.FILTRAR_HISTORICO;
+            case 8  -> Operacao.SAIR;
             default -> Operacao.INVALIDA;
         };
     }
@@ -154,7 +186,7 @@ public class Calculadora{
             case MULTIPLICATION -> multiplication(operating1, operating2);
             case DIVISION -> division(operating1, operating2);
             case ATUALIZAR -> 0; //setOperands(operating1, operating2, scanner);
-            case SAIR, INVALIDA -> 0;
+            case SAIR, INVALIDA, VER_HISTORICO, FILTRAR_HISTORICO -> 0;
         };
 
     }
@@ -169,6 +201,85 @@ public class Calculadora{
             case ATUALIZAR      -> System.out.println("");
             case SAIR           -> System.out.printf("OBRIGADO POR TESTAR O MEU PROGRAMA!");
             case INVALIDA       -> System.out.printf("Erro...");
+            default -> System.out.println();
         };
+    }
+
+    public static boolean saveHistory(Operacao operacao, double operating1, double operating2, double result, String[] history, int lenghtHistoryAtual, int lenghtHistory){
+        boolean isNothing = true;
+        if(lenghtHistoryAtual == lenghtHistory){
+            history[lenghtHistory - 1] = " ";
+
+            for (int i = (lenghtHistory - 2); i >= 0; i--) {
+                history[i + 1] = history[i];
+            }
+
+            switch(operacao){
+                case SUM            -> history[0] = String.format(ANSI_VERMELHO + "%.2f + %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case SUBTRACTION    -> history[0] = String.format(ANSI_VERMELHO + "%.2f - %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case MULTIPLICATION -> history[0] = String.format(ANSI_VERMELHO + "%.2f * %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case DIVISION       -> history[0] = String.format(ANSI_VERMELHO + "%.2f / %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                default             -> isNothing = false;//Apenas para resolver o problema
+            };
+
+
+        }else{
+            switch(operacao){
+                case SUM            -> history[lenghtHistoryAtual - 1] = String.format(ANSI_VERMELHO + "%.2f + %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case SUBTRACTION    -> history[lenghtHistoryAtual - 1] = String.format(ANSI_VERMELHO + "%.2f - %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case MULTIPLICATION -> history[lenghtHistoryAtual - 1] = String.format(ANSI_VERMELHO + "%.2f * %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                case DIVISION       -> history[lenghtHistoryAtual - 1] = String.format(ANSI_VERMELHO + "%.2f / %.2f = %.2f" + ANSI_RESET, operating1, operating2, result);
+                default             -> isNothing = false;//Apenas para resolver o problema
+            };
+        }
+        return isNothing;
+    }
+
+    public static void showHistory(String[] history, int lenghtHistoryAtual){
+        int aux = 1;
+        System.out.println(ANSI_VERMELHO + "\n---------- H I S T Ó R I C O ------------\n" + ANSI_RESET);
+
+        if(lenghtHistoryAtual == 0){
+            System.out.println(ANSI_VERMELHO + "SEM HISTÓRICO..." + ANSI_RESET);
+
+        }else{
+
+            for (String string : history) {
+                System.out.println(ANSI_VERMELHO + aux + " -> " + string + ANSI_RESET);
+                aux++;
+            }
+            System.out.println();//Apenas para pular 1 linha
+        }
+    }
+
+    public static void showHistory(String[] history, int lenghtHistoryAtual, String filter){
+        int aux = 1;
+        System.out.println(ANSI_VERMELHO + "\n---------- H I S T Ó R I C O ------------\n" + ANSI_RESET);
+
+        if(lenghtHistoryAtual == 0){
+            System.out.println(ANSI_VERMELHO + "SEM HISTÓRICO..." + ANSI_RESET);
+
+        }else{
+
+            for (String string : history) {
+                if(string.contains(filter)){
+                    System.out.println(ANSI_VERMELHO + aux + " -> " + string + ANSI_RESET);
+                }
+                aux++;
+            }
+            System.out.println();//Apenas para pular 1 linha
+        }
+    }
+
+    public static String validateFilter(String operation){
+        String[] validOption = {"+", "-", "*", "/"};
+
+        for (String string : validOption) {
+            if (operation.contains(string)) {
+                return string;
+            }
+        }
+
+        return " ";
     }
 }
